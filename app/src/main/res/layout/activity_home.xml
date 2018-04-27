@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="mta.com.final_project.HomeActivity"
+    android:orientation="vertical">
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:rowCount="3"
+        android:columnCount="1">
+
+        <Button
+            android:id="@+id/searchAnimalButton_home"
+            android:layout_width="match_parent"
+            android:layout_rowWeight="1"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:text="Search Animal"
+            android:textAllCaps="false"
+
+            />
+
+        <Button
+            android:id="@+id/foundAnimalButton_home"
+            android:layout_width="match_parent"
+            android:layout_rowWeight="1"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:text="Found Animal"
+            android:textAllCaps="false"
+
+            />
+
+        <Button
+            android:id="@+id/communityButton_home"
+            android:layout_width="match_parent"
+            android:layout_rowWeight="1"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="Community"
+            android:textAllCaps="false"
+            />
+
+    </GridLayout>
+
+
+</LinearLayout>
