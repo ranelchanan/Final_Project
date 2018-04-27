@@ -112,6 +112,7 @@ public class SignUpActivity extends AppCompatActivity {
                                     User newUser = new User(currentUser.getUid(), currentUser.getEmail(), "", currentUser.getDisplayName());
                                     userDB.child(currentUser.getUid()).setValue(newUser);
                                     finish();
+                                    finishLoginActivity();
                                     startActivity(new Intent(SignUpActivity.this, HomeActivity.class));
                                 }
                             });
@@ -127,6 +128,13 @@ public class SignUpActivity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    //this function make sure you can't get back to the login page after pressing the back button on the phone after getting to the home activity
+    private void finishLoginActivity(){
+        Intent intent = new Intent("finish");
+        sendBroadcast(intent);
+        finish();
     }
 
 }

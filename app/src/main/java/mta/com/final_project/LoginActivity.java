@@ -1,7 +1,10 @@
 package mta.com.final_project;
 
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -35,6 +38,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         initViews();
+        registerReceiver(broadcast_reciever, new IntentFilter("finish"));
     }
 
     private void initViews() {
@@ -111,6 +115,20 @@ public class LoginActivity extends AppCompatActivity {
                 });
 
     }
+
+    //this function gets notified if the login activity needed to be finished (if a new user signed up and is now in the home activity)
+    BroadcastReceiver broadcast_reciever = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context arg0, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals("finish")) {
+            //finishing the activity
+                finish();
+            }
+        }
+    };
+
 
 
 }
