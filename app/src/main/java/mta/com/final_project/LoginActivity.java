@@ -29,6 +29,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button loginButton;
     private ProgressDialog loginProgressDialog;
     private TextView signUpTextView;
+    private TextView forgotPasswordTextView;
 
     private FirebaseAuth mAuth;
 
@@ -47,11 +48,41 @@ public class LoginActivity extends AppCompatActivity {
         passwordEditText = findViewById(R.id.passwordEditText_login);
         loginButton = findViewById(R.id.loginButton_login);
         signUpTextView = findViewById(R.id.signUpTextView_login);
+        forgotPasswordTextView = findViewById(R.id.forgotPasswordTextView_login);
+
         loginProgressDialog = new ProgressDialog(this);
         mAuth = FirebaseAuth.getInstance();
 
         loginUser();
         goToSignUpActivityHandler();
+        forgotPasswordHandler();
+    }
+
+    private void forgotPasswordHandler() {
+        forgotPasswordTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isEmailValid(emailEditText.getText().toString().trim())) {
+                    Toast.makeText(LoginActivity.this, "Please enter your email",
+                            Toast.LENGTH_SHORT).show();
+                } else {
+
+                    mAuth.sendPasswordResetEmail(emailEditText.getText().toString().trim())
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        Toast.makeText(LoginActivity.this, "New password sent to your mail",
+                                                Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(LoginActivity.this, "something went wrong",
+                                                Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+                }
+            }
+        });
     }
 
     private void goToSignUpActivityHandler() {
@@ -72,7 +103,7 @@ public class LoginActivity extends AppCompatActivity {
                 final String emailStr = emailEditText.getText().toString().trim();
                 final String passwordStr = passwordEditText.getText().toString().trim();
 
-                if (emailStr.equals("") || !Patterns.EMAIL_ADDRESS.matcher(emailStr).matches()) {
+                if (!isEmailValid(emailStr)) {
                     emailEditText.setError("please enter valid email address");
                     emailEditText.requestFocus();
                 } else if (passwordStr.length() < 6) {
@@ -86,17 +117,24 @@ public class LoginActivity extends AppCompatActivity {
                     loginProgressDialog.setMessage("Please wait...");
                     loginProgressDialog.show();
                     createAccount(emailStr, passwordStr);
-
                 }
-
             }
 
         });
     }
 
+    private boolean isEmailValid(String email){
+        boolean res;
+        if (email.equals("") || !Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+            res = false;
+        } else {
+            res = true;
+        }
+
+        return res;
+    }
+
     private void createAccount(String email, String password){
-
-
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
