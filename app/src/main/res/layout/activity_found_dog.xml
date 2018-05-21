@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="mta.com.final_project.FoundDogActivity"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/titleTextView_FoundDogActivity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Found!"
+        android:textAlignment="center"
+        android:textSize="30dp"
+        android:layout_marginTop="10dp"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        >
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/map3"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_marginTop="40dp"
+                android:text="Add Location"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/dog2"
+                android:layout_marginEnd="5dp"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_marginTop="40dp"
+                android:text="Add Picture"/>
+
+        </RelativeLayout>
+
+
+
+    </LinearLayout>
+
+    <Spinner
+        android:id="@+id/animalTypeSpinner_FoundDogActivity"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginTop="20dp"
+        style="@style/Base.Widget.AppCompat.Spinner.Underlined"
+
+        />
+
+    <EditText
+        android:id="@+id/descriptionEditText_FoundDogActivity"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_margin="15dp"
+        android:background="@drawable/edit_text_border"
+        android:gravity="top"
+        android:hint="General description, color, size, race"
+        android:inputType="textMultiLine"
+        />
+
+    <CheckBox
+        android:id="@+id/IHaveItCheckBox_FoundDogActivity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:text="I have it!"
+        />
+
+    <Button
+        android:id="@+id/submitButton_FoundDogActivity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="5dp"
+        android:text="Submit"
+        android:textAllCaps="false" />
+
+
+
+
+</LinearLayout>

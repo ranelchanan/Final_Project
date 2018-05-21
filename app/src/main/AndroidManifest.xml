@@ -19,7 +19,12 @@
         <activity android:name=".LoginActivity" />
         <activity
             android:name=".SignUpActivity"
-            android:parentActivityName=".LoginActivity"/>
+            android:parentActivityName=".LoginActivity"
+            />
+        <activity
+            android:name=".FoundDogActivity"
+            android:parentActivityName=".HomeActivity"
+            />
     </application>
 
 </manifest>

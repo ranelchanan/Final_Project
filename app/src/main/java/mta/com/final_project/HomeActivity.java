@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -17,6 +19,10 @@ public class HomeActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference userDB;
 
+    private Button searchAnimalButton;
+    private Button foundAnimalButton;
+    private Button communityButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,11 +31,25 @@ public class HomeActivity extends AppCompatActivity {
 
         initViews();
         checkIfUserLoggedIn();
+        foundAnimalHandler();
+    }
+
+    private void foundAnimalHandler() {
+        foundAnimalButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomeActivity.this, FoundDogActivity.class));
+            }
+        });
     }
 
     private void initViews(){
         mAuth = FirebaseAuth.getInstance();
         userDB = FirebaseDatabase.getInstance().getReference().child("users");
+
+        searchAnimalButton = findViewById(R.id.searchAnimalButton_home);
+        foundAnimalButton = findViewById(R.id.foundAnimalButton_home);
+        communityButton = findViewById(R.id.communityButton_home);
     }
 
 
