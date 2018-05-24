@@ -30,6 +30,7 @@
             android:layout_weight="1">
 
             <ImageView
+                android:id="@+id/mapImageView_FoundDogActivity"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/map3"

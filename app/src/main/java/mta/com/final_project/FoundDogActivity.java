@@ -1,8 +1,11 @@
 package mta.com.final_project;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
@@ -11,6 +14,7 @@ import java.util.List;
 public class FoundDogActivity extends AppCompatActivity {
 
     private Spinner animalTypeSpinner;
+    private ImageView mapImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,10 +22,12 @@ public class FoundDogActivity extends AppCompatActivity {
         setContentView(R.layout.activity_found_dog);
 
         initViews();
+        chooseLocationHandler();
     }
 
     private void initViews(){
         addItemsToSpinner();
+        mapImageView = findViewById(R.id.mapImageView_FoundDogActivity);
     }
 
     private void addItemsToSpinner() {
@@ -34,5 +40,14 @@ public class FoundDogActivity extends AppCompatActivity {
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, spinnerItemsList);
         animalTypeSpinner.setAdapter(dataAdapter);
 
+    }
+
+    private void chooseLocationHandler() {
+        mapImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(FoundDogActivity.this, MapsActivity.class));
+            }
+        });
     }
 }
