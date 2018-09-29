@@ -71,6 +71,9 @@ public class SignUpActivity extends AppCompatActivity {
                 if (emailStr.equals("") || !Patterns.EMAIL_ADDRESS.matcher(emailStr).matches()) {
                     emailEditText.setError("please enter valid email address");
                     emailEditText.requestFocus();
+                } else if (usernameStr.isEmpty()) {
+                    usernameEditText.setError("Please choose a username");
+                    usernameEditText.requestFocus();
                 } else if (passwordStr.length() < 6) {
                     passwordEditText.setError("password minimum contain 6 character");
                     passwordEditText.requestFocus();

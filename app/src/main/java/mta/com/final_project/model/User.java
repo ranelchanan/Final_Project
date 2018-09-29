@@ -10,6 +10,8 @@ public class User {
     private String email;
     private String photoUrl;
     private String username;
+    private String phoneNumber;
+
 
     public User(){
 
@@ -20,6 +22,7 @@ public class User {
         this.email = email;
         this.photoUrl = photoUrl;
         this.id = id;
+
     }
 
     public String getUsername() {
@@ -52,6 +55,14 @@ public class User {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }
 

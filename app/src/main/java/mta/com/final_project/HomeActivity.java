@@ -1,16 +1,15 @@
 package mta.com.final_project;
 
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AlertDialog;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -18,10 +17,8 @@ public class HomeActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private DatabaseReference userDB;
-
-    private Button searchAnimalButton;
-    private Button foundAnimalButton;
-    private Button communityButton;
+    private BottomNavigationView bottomNavigationView;
+    private static boolean isOnResume;
 
 
     @Override
@@ -31,25 +28,13 @@ public class HomeActivity extends AppCompatActivity {
 
         initViews();
         checkIfUserLoggedIn();
-        foundAnimalHandler();
+        bottomMenuHandler();
     }
 
-    private void foundAnimalHandler() {
-        foundAnimalButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(HomeActivity.this, FoundDogActivity.class));
-            }
-        });
-    }
 
     private void initViews(){
         mAuth = FirebaseAuth.getInstance();
         userDB = FirebaseDatabase.getInstance().getReference().child("users");
-
-        searchAnimalButton = findViewById(R.id.searchAnimalButton_home);
-        foundAnimalButton = findViewById(R.id.foundAnimalButton_home);
-        communityButton = findViewById(R.id.communityButton_home);
     }
 
 
@@ -61,66 +46,57 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void goToLoginPage(){
-
         finish();
         startActivity(new Intent(HomeActivity.this, LoginActivity.class));
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_home_menu, menu);
-        return super.onCreateOptionsMenu(menu);
+
+    public void bottomMenuHandler() {
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener
+                (new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        Fragment selectedFragment = null;
+                        switch (item.getItemId()) {
+                            case R.id.homeItem_bottomNavigationMenu:
+                                selectedFragment = new FoundAndLostTabsContainer();
+                                break;
+                            case R.id.postItem_bottomNavigationMenu:
+                                selectedFragment = new FormFragment();
+                                break;
+                            case R.id.profileItem_bottomNavigationMenu:
+                                selectedFragment = new ProfileFragment();
+                                break;
+                        }
+
+                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.frame_layout, selectedFragment);
+                        transaction.commit();
+                        return true;
+                    }
+                });
+
+        //Manually displaying the first fragment - one time only
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_layout, new FoundAndLostTabsContainer());//new AnimalsListFragment());
+        transaction.commit();
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        boolean res = false;
-
-        switch(item.getItemId()){
-            case R.id.logoutMenu:
-                res = onClickLogoutMenu();
-                break;
-        }
-
-        if (res != false){
-            return res;
-        } else {
-            return super.onOptionsItemSelected(item);
-        }
+    public static void setIsOnResume() {
+        isOnResume = true;
     }
 
-    private boolean onClickLogoutMenu(){
-        boolean res = false;
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-        builder.setTitle("Log Out");
-        builder.setMessage("Are you sure you want to log out?");
-
-        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-
-            public void onClick(DialogInterface dialog, int which) {
-                mAuth.signOut();
-                finish();
-                startActivity(new Intent(HomeActivity.this, LoginActivity.class));
-                dialog.dismiss();
-            }
-        });
-
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-                // Do nothing
-                dialog.dismiss();
-            }
-        });
-
-        AlertDialog alert = builder.create();
-        alert.show();
-
-        return true;
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (isOnResume) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.frame_layout, new ProfileFragment());//new AnimalsListFragment());
+            transaction.commit();
+            bottomNavigationView.setSelectedItemId(R.id.profileItem_bottomNavigationMenu);
+        }
     }
 }

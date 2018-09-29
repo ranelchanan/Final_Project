@@ -42,6 +42,12 @@ public class LoginActivity extends AppCompatActivity {
         registerReceiver(broadcast_reciever, new IntentFilter("finish"));
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(broadcast_reciever);
+    }
+
     private void initViews() {
 
         emailEditText = findViewById(R.id.emailEditText_login);
@@ -160,6 +166,7 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context arg0, Intent intent) {
             String action = intent.getAction();
+            assert action != null;
             if (action.equals("finish")) {
             //finishing the activity
                 finish();
